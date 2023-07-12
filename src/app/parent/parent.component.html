@@ -1,0 +1,40 @@
+<form [formGroup]="parentForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card>
+      <div *ngFor="let item of previewItems; let i = index">
+        <div [ngClass]="['stepName']">{{ i + 1 }}: {{ item.name }}</div>
+        <div [ngClass]="['stepAction']">{{ item.action }}</div>
+      </div>
+    </mat-card>
+    <!-- <div formArrayName="steps"> -->
+    <div *ngFor="let step of steps.controls; let i = index">
+      <!-- <mat-card *ngFor="let step of steps.controls; let i = index"> -->
+      <mat-card>
+        <app-child [formControl]="fetchStepControl(i)" [index]="i"></app-child>
+        <button mat-stroked-button type="button" (click)="addItem()">
+          ➕ Add Step
+        </button>
+        <button mat-stroked-button type="button" (click)="removeItem(i)">
+          ➖ Remove Step
+        </button>
+      </mat-card>
+      <button [disabled]="parentForm.invalid" (click)="preview()">
+        Preview
+      </button>
+      <span *ngIf="invalidIndices.length"
+        >Steps {{ invalidIndices.join(', ') }} invalid</span
+      >
+      <!-- </div> -->
+    </div>
+  </mat-card>
+  <!-- <div *ngIf="parentForm.invalid">INVALID</div>
+  <div *ngIf="parentForm.valid">VALID</div> -->
+  <mat-card>
+    <mat-card-title>Form</mat-card-title>
+    <pre>{{ this.parentForm.value | json }}</pre>
+  </mat-card>
+  <mat-card>
+    <mat-card-title>Errors</mat-card-title>
+    <pre>{{ this.parentForm | keyvalue | json }}</pre>
+  </mat-card>
+</form>

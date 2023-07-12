@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-form-field appearance="outline" [ngClass]="['name']">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" [formControl]="stepName" />
+    <button
+      mat-stroked-button
+      type="button"
+      *ngIf="stepName"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="stepName.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-error *ngIf="stepName.errors?.required">You must enter a step name</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" [ngClass]="['action']">
+    <mat-label>Action</mat-label>
+    <mat-select name="Action" [formControl]="action">
+      <mat-option *ngFor="let action of actions" [value]="action.value">{{ action.description }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="action.errors?.required">You must select an action</mat-error>
+  </mat-form-field>
+  <mat-form-field *ngIf="showValue" appearance="outline" [ngClass]="['value']">
+    <mat-label>Value</mat-label>
+    <input matInput type="text" [formControl]="valueCtrl" />
+    <button
+      mat-stroked-button
+      type="button"
+      *ngIf="valueCtrl"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="valueCtrl.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <div *ngIf="stepForm.invalid">INVALID</div>
+  <div *ngIf="stepForm.valid">VALID</div>
+</mat-card>
